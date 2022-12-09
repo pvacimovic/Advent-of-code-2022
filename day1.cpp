@@ -1,20 +1,32 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
 using namespace std;
 
-int main()
+bool isInArray(int number, int* array, int arraySize)
 {
+    for (int i = 0; i < arraySize; i++)
+    {
+        if (array[i] == number)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
-    int sum = 0;
-    int max = 0;
+int main() {
 
     ifstream file;
-    string filename = "day1.txt";
+    file.open("day1.txt");
 
-    int line = 0;
-    int value_in_line;
-
-    file.open(filename);
+    int value_in_line = 0;
+    string lines = "";
+    int sum = 0;
+    int max = 0, max2 = 0, max3 = 0, prev = 0;
+    int line;
+    int maxes[3] = {0, 0, 0};
 
     if(file.fail())
     {
@@ -22,36 +34,65 @@ int main()
         return 1;
     }
 
-    while(!file.eof())
-    {
+    for(int i=0; i<3; i++) // needed first 3 max
+    {   
+        cout << "try " << i << endl;
 
-        value_in_line = getline(file, line);
-
-        if(!isdigit(value_in_line))
+        while(!file.eof())
         {
-            if(max < sum)
+            getline(file, lines);
+
+            if(lines=="")
             {
-                max = sum;
+                if(max < sum)
+                {
+                    prev = max;
+                    max = sum;
+                    if(!isInArray(max, maxes, 3))
+                    {
+                        maxes[i] = max;
+                    }
+                    else
+                    {
+                        max = prev;
+                    }
+                }
+                sum = 0;
             }
-            sum = 0;
+            else
+            {
+                sum += stoi(lines);
+            }
+
         }
-        else
+
+        // just to check the last section
+        if(max < sum)
         {
-            sum += value_in_line;
+            prev = max;
+            max = sum;
+            if(!isInArray(max, maxes, 3))
+            {
+                maxes[i] = max;
+            }
+            else
+            {
+                max = prev;
+            }
         }
 
-        line++;
+        sum = 0;
+        max = 0;
+        
+        file.seekg(0); // move to the beggining to a file
     }
-
-    if(max < sum)
-    {
-        max = sum;
-    }
-    sum = 0;
-
-    cout << max << endl;
 
     file.close();
+
+    int part2 = maxes[0] + maxes[1] + maxes[2];
+
+    cout << "Maximum sum: " << maxes[0] << endl;
+    cout << "Top 3 max sums: " << part2 << endl;
 
     return 0;
 }
