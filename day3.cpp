@@ -48,7 +48,7 @@ int main() {
         string firstHalf = line.substr(0, startIndex);
         string secondHalf = line.substr(startIndex);
 
-        target = compare(firstHalf, secondHalf, length);
+        target = compare(firstHalf, secondHalf, length/2);
 
         if(islower(target)){
             points = static_cast<int>(target) - 96;
