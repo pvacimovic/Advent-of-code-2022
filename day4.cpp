@@ -13,7 +13,8 @@ int main(){
     string line = "";
     string num = "";
     char *c;
-    int sum=0;
+    int sum = 0;
+    int sum2 = 0;
 
     if (file.fail()) {
         cout << "file failed to open" << endl;
@@ -24,14 +25,6 @@ int main(){
 
         string arrS[4] = {""}; // to store four numbers as strings
         int arr[4] = {0}; // to store four intigers
-
-        //b++;
-        // int mat[2][99];
-        // for (int i = 0; i < 2; i++) {
-        //     for (int j = 0; j < 99; j++) {
-        //     mat[i][j] = 0;
-        //     }
-        // }  
 
         getline(file, line);
 
@@ -82,6 +75,8 @@ int main(){
         int num3 = arr[2];
         int num4 = arr[3];
 
+        // part 1
+
         if(num1 < num3 && num2 >= num4){
             sum += 1;
         }
@@ -95,38 +90,14 @@ int main(){
             sum += 0;
         }
 
-        // // filling matrix with 0 and 1
-        // for(int j=0; j<99; j++){
+        // part 2
 
-        //     if(j>=arr[0]){
-        //         mat[0][j] = 1;
-        //     }
-
-        //     if(j>arr[1]){
-        //         mat[0][j] = 0;
-        //     }
-        //     if(j>=arr[2]){
-        //         mat[1][j] = 1;
-        //     }
-
-        //     if(j>arr[3]){
-        //         mat[1][j] = 0;
-        //     }
-        // }
-
-        // if(arr[0] > arr[2]){
-        //     if(mat[0][arr[0]]==1 && mat[1][arr[0]]==1 && mat[0][arr[1]]==1 && mat[1][arr[1]]==1){
-        //         sum += 1;
-        //     }
-        // }
-        // else if(arr[0] < arr[2]){
-        //     if(mat[0][arr[2]]==1 && mat[1][arr[2]]==1 && mat[0][arr[3]]==1 && mat[1][arr[3]]==1){
-        //         sum += 1;
-        //     }
-        // }
-        // else{
-        //     sum += 1;
-        // }
+        if(num1 <= num4 && num1 >= num3 || num2 <= num4 && num2 >= num3){
+            sum2 += 1;
+        }
+        else if(num3 <= num2 && num3 >= num1 || num4 <= num2 && num4 >= num1){
+            sum2 += 1;
+        }
 
         //cout << b << " " << line << " " << *c << endl;
         //cout << b << " " << line << " = " << arr[0] << " " << arr[1] << " " << arr[2] << " " << arr[3] << " " << endl;
@@ -137,7 +108,7 @@ int main(){
     file.close();
 
     cout << "Part1: Pairs where one fully contain the other: " << sum << endl;
-    // cout << "Part 2 - Sum of priorities: " << sum2 << endl;
+    cout << "Part2: Pairs where one fully contain the other: " << sum2 << endl;
 
     return 0;
 }
